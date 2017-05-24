@@ -11,7 +11,7 @@ var SRC_DIR = path.resolve(__dirname, 'app')
 var DIST_DIR = path.resolve(__dirname, 'dist')
 
 module.exports = {
-	entry: SRC_DIR + '/app.js',
+	entry: SRC_DIR + '/index.js',
 	output: {
 		path: DIST_DIR,
 		filename: 'bundle.js'
