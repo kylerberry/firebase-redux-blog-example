@@ -1,13 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-
-class App extends React.Component {
-	render() {
-		return (<div><h1>Hello World!</h1></div>);
-	}
-}
+import Root from './components/Root'
+import configureStore from './configureStore'
 
 ReactDOM.render(
-	<App></App>,
+	<Root store={configureStore()} />,
 	document.getElementById('root')
 )
