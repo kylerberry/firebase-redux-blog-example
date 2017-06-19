@@ -2,12 +2,13 @@ import React from 'react'
 import * as actions from '../actions'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import posts from '../reducers'
 
 class PostsApp extends React.Component {
-	/*componentDidMount() {
-		console.log(fetchPosts)
-		fetchPosts()
-	}*/
+	componentDidMount() {
+		const { fetchPosts } = this.props
+		fetchPosts();
+	}
 
 	render () {
 		return (<h1>Hello Posts!</h1>)
@@ -19,8 +20,9 @@ class PostsApp extends React.Component {
 // ...make ContainerComponents
 // @todo define getPosts reducer
 const mapStateToProps = (state) => ({
-	posts : getPosts(state, filter)
+	posts
 })
+
 PostsApp = connect(
 	mapStateToProps,
 	actions

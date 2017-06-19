@@ -18,7 +18,7 @@ const isFetching = (state = false, action) => {
 		case FETCH_POSTS_PENDING:
 			return true
 		default:
-			return state
+			return false
 	}
 }
 
@@ -26,7 +26,7 @@ const getPosts = (state = [], action) => {
 	switch (action.type) {
 		case FETCH_POSTS_FULFILLED:
 			return {
-				...action.response,
+				...action.payload,
 				isFetching: false
 			}
 		case FETCH_POSTS_REJECTED:
