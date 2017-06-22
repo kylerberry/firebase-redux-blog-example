@@ -1,8 +1,4 @@
-import {
-	FETCH_POSTS_PENDING,
-	FETCH_POSTS_FULFILLED,
-	FETCH_POSTS_REJECTED
-} from '../actions/constants'
+import * as types from '../actions/constants'
 
 import { combineReducers } from 'redux'
 
@@ -15,24 +11,23 @@ import { combineReducers } from 'redux'
 
 const isFetching = (state = false, action) => {
 	switch (action.type) {
-		case FETCH_POSTS_PENDING:
+		case types.FETCH_POSTS_PENDING:
 			return true
 		default:
 			return false
 	}
 }
 
-const getPosts = (state = [], action) => {
+const byId = (state = {}, action) => {
 	switch (action.type) {
-		case FETCH_POSTS_FULFILLED:
+		case types.FETCH_POSTS_FULFILLED:
 			return {
 				...action.payload,
-				isFetching: false
+				...state
 			}
-		case FETCH_POSTS_REJECTED:
+		case types.FETCH_POSTS_REJECTED:
 			return {
-				...state,
-				isFetching: false
+				...state
 			}
 		default:
 			return state;
@@ -40,7 +35,7 @@ const getPosts = (state = [], action) => {
 }
 
 const posts = combineReducers({
-	posts: getPosts,
+	byId,
 	isFetching
 })
 

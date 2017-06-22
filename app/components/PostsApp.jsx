@@ -1,31 +1,9 @@
 import React from 'react'
-import * as actions from '../actions'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import posts from '../reducers'
+import PostsList from './PostsList'
 
-class PostsApp extends React.Component {
-	componentDidMount() {
-		const { fetchPosts } = this.props
-		fetchPosts();
-	}
-
-	render () {
-		return (<h1>Hello Posts!</h1>)
-	}
-}
-
-// Move this to the Posts Component
-// ...just testing hooking up the store
-// ...make ContainerComponents
-// @todo define getPosts reducer
-const mapStateToProps = (state) => ({
-	posts
-})
-
-PostsApp = connect(
-	mapStateToProps,
-	actions
-)(PostsApp)
+const PostsApp = () => 
+	<div>
+		<PostsList />
+	</div>
 
 export default PostsApp
