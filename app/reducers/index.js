@@ -6,8 +6,6 @@ import posts from './posts'
 *
 * https://github.com/erikras/react-redux-universal-hot-example/issues/252
 */
-const rootReducer = combineReducers({
+export default combineReducers({
 	posts
 })
-
-export default rootReducer

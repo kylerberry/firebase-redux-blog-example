@@ -1,13 +1,5 @@
 import * as types from '../actions/constants'
-
 import { combineReducers } from 'redux'
-
-/*
-{
-	posts : [],
-	isFetching: false
-}
-*/
 
 const isFetching = (state = false, action) => {
 	switch (action.type) {
@@ -22,8 +14,7 @@ const byId = (state = {}, action) => {
 	switch (action.type) {
 		case types.FETCH_POSTS_FULFILLED:
 			return {
-				...action.payload,
-				...state
+				...action.payload
 			}
 		case types.FETCH_POSTS_REJECTED:
 			return {
