@@ -2,9 +2,10 @@ import React from 'react'
 import * as actions from '../actions'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import _map from 'lodash/map'
 
 // @todo make a Post Component
+// @todo delete button here just for testing
+
 class PostsList extends React.Component {
 
 	componentDidMount() {
@@ -13,26 +14,33 @@ class PostsList extends React.Component {
 	}
 
 	render () {
-		const { posts } = this.props
+		const {
+			deletePost,
+			posts : {
+				isFetching,
+				list,
+				byId
+			}
+		} = this.props
 		return (
-			<div>
-				{posts.isFetching ?
-					<p>Loading...</p> :
-					<ul>
-						{_map(posts.byId, post => 
-							<li key={post.id}>{post.title}</li>
-						)}
-					</ul>
+			<ul>
+				{
+					isFetching ? <li>Loading...</li> :
+					list.map(id => {
+						const post = byId[id]
+						return <li key={post.id}>
+							{post.title}
+							<button onClick={() => {
+								deletePost(id)
+							}}>Delete</button>
+						</li>
+					})
 				}
-			</div>
-			
+			</ul>
 		)
 	}
 }
 
-// Move this to the Posts Component
-// ...just testing hooking up the store
-// ...make ContainerComponents
 const mapStateToProps = state => ({
 	posts : { ...state.posts }
 })
