@@ -2,7 +2,7 @@ import * as types from '../actions/constants'
 import { combineReducers } from 'redux'
 import _map from 'lodash/map'
 
-const isFetching = (state = false, action) => {
+const isFetching = (state = true, action) => {
 	switch (action.type) {
 		case types.FETCH_POSTS_PENDING:
 			return true
