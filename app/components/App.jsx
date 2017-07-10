@@ -10,7 +10,6 @@ import CreatePost from './CreatePost'
 const App = ({ children }) => 
 	<div>
 		<Header />
-		<CreatePost />
 		{children}
 		<Footer />
 	</div>

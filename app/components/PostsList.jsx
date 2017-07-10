@@ -1,10 +1,9 @@
 import React from 'react'
-import * as actions from '../actions'
+import * as postActions from '../actions/post'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 // @todo make a Post Component
-// @todo delete button here just for testing
 
 class PostsList extends React.Component {
 
@@ -30,9 +29,6 @@ class PostsList extends React.Component {
 						const post = byId[id]
 						return <li key={post.id}>
 							{post.title}
-							<button onClick={() => {
-								deletePost(id)
-							}}>Delete</button>
 						</li>
 					})
 				}
@@ -41,13 +37,17 @@ class PostsList extends React.Component {
 	}
 }
 
+/*<button onClick={() => {
+								deletePost(post.uid, id)
+							}}>Delete</button>*/
+
 const mapStateToProps = state => ({
 	posts : { ...state.posts }
 })
 
 PostsList = connect(
 	mapStateToProps,
-	actions
+	{ ...postActions } 
 )(PostsList)
 
 export default PostsList

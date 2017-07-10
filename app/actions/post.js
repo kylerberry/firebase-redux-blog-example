@@ -4,6 +4,7 @@ import { FirebaseDb } from '../api/Firebase'
 // @todo extract firebase api methods out of the action creators
 const rootRef = FirebaseDb.ref()
 const postsRef = rootRef.child('posts')
+const userPostsRef = rootRef.child('user_posts')
 
 /**
 * Fetches Posts Once
@@ -41,7 +42,6 @@ export const fetchPostsRealtime = () => dispatch => {
 * Create a Post
 *
 * @param {Object} data
-* @param {Object}
 */
 export const createPost = data => {
 	const post = {
@@ -52,9 +52,8 @@ export const createPost = data => {
 	const promise = new Promise((resolve, reject) => {
 		try {
 			rootRef.update({
-		        [`posts/${post.id}`] : post
-		        // @todo will need this after auth
-		        // [`user_posts/${user.id}/${post.id}`] : post
+		        [`posts/${post.id}`] : post,
+		        [`user_posts/${post.uid}/${post.id}`] : post
 		    }).then(resolve)
 		} catch (e) {
 			reject(e.message)
@@ -72,14 +71,16 @@ export const createPost = data => {
 * Delete a Post
 *
 * @param {String} id
+* @param {String} userId
 * @return {Object}
 */
-
-export const deletePost = id => {
+export const deletePost = (userId, id) => {
 	const promise = new Promise((resolve, reject) => {
-		const postRef = postsRef.child(id)
 		try {
-			postRef.remove().then(resolve)
+			rootRef.update({
+		        [`posts/${id}`] : null,
+		        [`user_posts/${userId}/${id}`] : null
+		    }).then(resolve)
 		} catch (e) {
 			reject(e.message)
 		}

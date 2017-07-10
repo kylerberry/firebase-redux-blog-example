@@ -1,31 +1,32 @@
 import React from 'react'
-import * as actions from '../actions'
+import * as postActions from '../actions/post'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 class CreatePost extends React.Component {
 
 	render () {
-		const { createPost } = this.props
+		const { createPost, auth } = this.props
 
 		return <button onClick={() => {
 			const now = new Date()
 			createPost({
 				content: 'test content',
 				datetime: now.toISOString(),
-				title: `title: ${now.toISOString()}`
+				title: `title: ${now.toISOString()}`,
+				uid: auth.user.id
 			})
 		}}>Create Post</button>
 	}
 }
 
-/*const mapStateToProps = state => ({
-	posts : { ...state.posts }
+const mapStateToProps = state => ({
+	auth : { ...state.auth }
 })
-*/
+
 CreatePost = connect(
-	null,
-	actions
+	mapStateToProps,
+	postActions
 )(CreatePost)
 
 export default CreatePost

@@ -54,3 +54,6 @@ const posts = combineReducers({
 })
 
 export default posts
+
+// Selectors
+export const getById = (state, id) => state.byId[id]
