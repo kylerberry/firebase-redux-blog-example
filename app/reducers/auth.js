@@ -4,30 +4,34 @@ import { combineReducers } from 'redux'
 const initialUserState = {
 	id: null,
 	email: null,
-	displayName: null
+	displayName: null,
+	jwt: null
 }
 
-const user = (state = initialUserState, { type, payload }) => {
-	switch (type) {
-		case types.GET_AUTH_FULFILLED:
+// @todo user could have it's own set of reducers
+const user = (state = initialUserState, action) => {
+	switch (action.type) {
+		case types.GET_AUTHORIZED_USER_FULFILLED:
 			return {
 				...state,
-				email: payload.email,
-				displayName: payload.displayName || payload.email.split('@')[0],
-				id: payload.uid
+				email: action.payload.email,
+				displayName: action.payload.displayName || action.payload.email.split('@')[0],
+				id: action.payload.uid,
+				jwt: action.payload.jwt
 			}
+		case types.REMOVE_AUTHORIZED_USER:
+			return initialUserState
 		default:
 			return state
 	}
 }
 
 //@todo initialState could default to whatever is in localStorage
-//@todo maybe this state should depend on the token
-const isAuthorized = (state = false, { payload, type }) => { 
-	switch (type) {
-		case types.GET_AUTH_FULFILLED:
-			return payload.uid !== null
-		case types.GET_AUTH_REJECTED:
+const isAuthorized = (state = false, action) => {
+	switch (action.type) {
+		case types.GET_AUTHORIZED_USER_FULFILLED:
+			return Boolean(action.payload.jwt)
+		case types.REMOVE_AUTHORIZED_USER_FULFILLED:
 			return false
 		default:
 			return state

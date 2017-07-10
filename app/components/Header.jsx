@@ -25,8 +25,8 @@ const Greet = ({ isAuthorized, user }) => {
 
 class Header extends React.Component {
 	componentDidMount() {
-		const { getAuth } = this.props
-		getAuth()
+		const { fetchAuthRealtime } = this.props
+		fetchAuthRealtime()
 	}
 	render() {
 		const { auth } = this.props
