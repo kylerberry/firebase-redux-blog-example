@@ -17,7 +17,10 @@ const Root = ({ store }) =>
 		<Router>
 			<App>
 				<Route exact path="/" component={PostsList} />
-				<Route path="/login" component={Login} />
+				<Route path="/login" component={Login}>
+					<Route path=":action" />
+				</Route>
+
 				<Route path="/post/:id" component={ViewPost} />
 				<PrivateRoute path="/logout" component={Logout} />
 				<PrivateRoute path="/edit/:id" component={EditPost} />

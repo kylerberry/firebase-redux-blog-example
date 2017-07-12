@@ -37,10 +37,6 @@ class PostsList extends React.Component {
 	}
 }
 
-/*<button onClick={() => {
-								deletePost(post.uid, id)
-							}}>Delete</button>*/
-
 const mapStateToProps = state => ({
 	posts : { ...state.posts }
 })

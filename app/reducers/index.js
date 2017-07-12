@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import posts from './posts'
 import auth from './auth'
-
+import { reducer as formReducer } from 'redux-form'
 /**
 * firebase with redux
 *
@@ -9,5 +9,6 @@ import auth from './auth'
 */
 export default combineReducers({
 	posts,
-	auth
+	auth,
+	form: formReducer
 })

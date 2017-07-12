@@ -41,5 +41,9 @@
 		"require": [
 			"babel-register"
 		]
+	},
+	"dependencies": {
+		"react-addons-css-transition-group": "^15.6.0",
+		"redux-form": "^7.0.0"
 	}
 }
