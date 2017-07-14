@@ -13,10 +13,15 @@ const userPostsRef = rootRef.child('user_posts')
 */
 export const fetchPosts = () => ({
 	type: types.FETCH_POSTS,
-	payload: new Promise(resolve => {
-		postsRef.once('value', snapshot => {
-			resolve(snapshot.val())
-		})
+	payload: new Promise((resolve, reject) => {
+		try {
+			postsRef.once('value', snapshot => {
+				resolve(snapshot.val())
+			})
+		} catch (e) {
+			reject(e.message)
+		}
+		
 	})
 })
 
@@ -29,10 +34,15 @@ export const fetchPostsRealtime = () => dispatch => {
 	postsRef.on('value', snapshot => {
 		dispatch({
 			type: types.FETCH_POSTS,
-			payload: new Promise(resolve => {
-				postsRef.on('value', snapshot => {
-					resolve(snapshot.val())
-				})
+			payload: new Promise((resolve, reject) => {
+				try {
+					postsRef.on('value', snapshot => {
+						resolve(snapshot.val())
+					})
+				} catch (e) {
+					reject(e.message)
+				}
+				
 			})
 		})
 	})

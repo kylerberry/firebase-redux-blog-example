@@ -1,0 +1,40 @@
+- update database schema:
+
+{
+	posts : {
+		$postId : {
+			...post
+		}
+	},
+	comments : {
+		$commentId : {
+			...comment
+		}
+	},
+	roles : {
+		0 : admin,
+		10 : poster,
+		20 : commenter
+	},
+	users : {
+		$userId : {
+			...user
+		}
+	},
+	user_posts : {
+		$userId : $postId
+	},
+	user_roles : {
+		$userId : $roleId
+	},
+	user_comments : {
+		$userId : $commentId
+	}
+}
+
+- update db permissions
+- redirect home on successful login or register ( or referer )
+- if user already logged in and lands on /login, redirect to referer
+- form validations/ error messaging to signIn/Up UI
+- add some styles
+- refactor the header

@@ -11,7 +11,8 @@ const initialUserState = {
 // @todo user could have it's own set of reducers
 const user = (state = initialUserState, action) => {
 	switch (action.type) {
-		case types.GET_AUTHORIZED_USER_FULFILLED:
+		case types.SIGN_IN_FULFILLED:
+		// case types.GET_AUTHORIZED_USER_FULFILLED:
 			return {
 				...state,
 				email: action.payload.email,
@@ -21,18 +22,6 @@ const user = (state = initialUserState, action) => {
 			}
 		case types.REMOVE_AUTHORIZED_USER:
 			return initialUserState
-		default:
-			return state
-	}
-}
-
-//@todo initialState could default to whatever is in localStorage
-const isAuthorized = (state = false, action) => {
-	switch (action.type) {
-		case types.GET_AUTHORIZED_USER_FULFILLED:
-			return Boolean(action.payload.jwt)
-		case types.REMOVE_AUTHORIZED_USER_FULFILLED:
-			return false
 		default:
 			return state
 	}
@@ -49,10 +38,12 @@ const error = (state = null, action) => {
 	}
 }
 
+export const isAuthorized = ({ user }) => {
+	return Boolean(user.jwt)
+}
+
 const auth = combineReducers({
 	user,
-	isAuthorized,
 	error
 })
-
 export default auth

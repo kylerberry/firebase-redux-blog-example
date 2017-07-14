@@ -3,7 +3,7 @@ import * as postActions from '../actions/post'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-// @todo make a Post Component
+// @todo make a PostPreview Component
 
 class PostsList extends React.Component {
 

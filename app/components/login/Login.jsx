@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
+import { withRouter } from 'react-router'
 
 import * as authActions from '../../actions/auth'
 
@@ -19,8 +20,21 @@ class Login extends React.Component {
 		console.log(values)
 	}
 
+	componentWillUpdate({ auth, history }) {
+		const { user } = auth
+		//catch updated auth here and redirect
+		if (!user.jwt) {
+			if (auth.error) {
+				// show error
+			}
+			return
+		}
+		history.push('/')
+	}
+
+	// @todo figure out how to make these tabs work with/without NavLink
 	render() {
-		const { formType } = this.props
+		const { formType, location } = this.props
 		return (
 			<div>
 				<NavLink exact to="/login#signup" className="tab" activeClassName="tab--active">Sign Up</NavLink>
@@ -34,13 +48,15 @@ class Login extends React.Component {
 	}
 }
 
-const mapStateToProps = (state, { location : { hash } }) => ({
-	formType: hash.replace('#', '')
+//will need withRouter
+const mapStateToProps = ({ auth }, { location : { hash } }) => ({
+	formType: hash.replace('#', ''),
+	auth
 })
 
-Login = connect(
+Login = withRouter(connect(
 	mapStateToProps,
 	{ ...authActions }
-)(Login)
+)(Login))
 
 export default Login

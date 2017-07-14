@@ -4,6 +4,7 @@ import { createStore, applyMiddleware } from 'redux'
 import { createLogger } from 'redux-logger'
 import promiseMiddleware from 'redux-promise-middleware'
 import thunk from 'redux-thunk'
+import { loadState } from './localStorage'
 
 const configureStore = () => {
 	const middlewares = [
@@ -17,6 +18,7 @@ const configureStore = () => {
 
 	return createStore(
 		rootReducer,
+		loadState(),
 		applyMiddleware(...middlewares)
 	)	
 }

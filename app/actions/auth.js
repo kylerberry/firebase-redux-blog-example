@@ -8,10 +8,15 @@ import { FirebaseAuth } from '../api/Firebase'
 */
 export const getAuthUser = user => ({
 	type: types.GET_AUTHORIZED_USER,
-	payload: new Promise(resolve => {
-		user.getIdToken(true).then(jwt => {
-			resolve({ ...user, jwt })
-		})
+	payload: new Promise((resolve, reject) => {
+		try {
+			user.getIdToken(true).then(jwt => {
+				resolve({ ...user, jwt })
+			})
+		} catch (e) {
+			reject(e.message)
+		}
+		
 	})
 })
 
@@ -26,13 +31,17 @@ export const removeAuthUser = () => ({
 * Watches the auth state of the current user
 */
 export const fetchAuthRealtime = () => dispatch => {
-	FirebaseAuth.onAuthStateChanged(user => {
-		if (user) {
-			dispatch(getAuthUser(user))
-		} else {
-			dispatch(removeAuthUser())
-		}
-	})
+	try {
+		FirebaseAuth.onAuthStateChanged(user => {
+			if (user) {
+				dispatch(getAuthUser(user))
+			} else {
+				dispatch(removeAuthUser())
+			}
+		})
+	} catch (e) {
+		// ignore
+	}
 }
 
 /**
@@ -42,9 +51,13 @@ export const fetchAuthRealtime = () => dispatch => {
 */
 export const signIn = (email, password) => {
 	const promise = new Promise((resolve, reject) => {
-		FirebaseAuth.signInWithEmailAndPassword(email, password)
-			.then(resolve)
-			.catch(reject)
+		try {
+			FirebaseAuth.signInWithEmailAndPassword(email, password)
+				.then(resolve)
+				.catch(reject)
+		} catch (e) {
+			reject(e)
+		}
 	})
 
 	return {
@@ -81,9 +94,14 @@ export const signOut = () => {
 */
 export const createAuth = (email, password) => {
 	const promise = new Promise((resolve, reject) => {
-		FirebaseAuth.createUserWithEmailAndPassword(email, password)
-			.then(resolve)
-			.catch(reject)
+		//@todo also need to dispatch actions for updating user table
+		try {
+			FirebaseAuth.createUserWithEmailAndPassword(email, password)
+				.then(resolve)
+				.catch(reject)
+		} catch (e) {
+			reject(e)
+		}
 	})
 
 	return {
