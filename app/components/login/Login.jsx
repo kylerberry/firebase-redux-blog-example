@@ -9,20 +9,29 @@ import * as authActions from '../../actions/auth'
 import SignUpForm from './SignUpForm'
 import SignInForm from './SignInForm'
 
+// TEST ONLY
+const DeleteUser = ({ onClick }) => {
+	return (<a href="" onClick={(e) => {
+		e.preventDefault()
+		onClick()
+	}} >DELETE ME</a>)
+}
+
 
 class Login extends React.Component {
-	submitSignIn = (values) => {
+	submitSignIn = values => {
 		const { signIn } = this.props
 		signIn(values.email, values.password)
 	}
 
-	submitSignUp = (values) => {
-		console.log(values)
+	submitSignUp = values => {
+		const { signUp } = this.props
+		// @todo validate fields
+		signUp(values.email, values.password)
 	}
 
 	componentWillUpdate({ auth, history }) {
 		const { user } = auth
-		//catch updated auth here and redirect
 		if (!user.jwt) {
 			if (auth.error) {
 				// show error
@@ -34,7 +43,7 @@ class Login extends React.Component {
 
 	// @todo figure out how to make these tabs work with/without NavLink
 	render() {
-		const { formType, location } = this.props
+		const { formType, location, deleteUser } = this.props
 		return (
 			<div>
 				<NavLink exact to="/login#signup" className="tab" activeClassName="tab--active">Sign Up</NavLink>
@@ -43,6 +52,7 @@ class Login extends React.Component {
 					? <SignUpForm onSubmit={ this.submitSignUp } />
 					: <SignInForm onSubmit={ this.submitSignIn } />
 				}
+				<DeleteUser onClick={deleteUser} />
 			</div>
 		)
 	}

@@ -11,8 +11,8 @@ const Greet = ({
 	auth,
 	location
 }) => {
-	const { isAuthorized, user } = auth;
-	if (!isAuthorized || location.pathname == '/login') {
+	const { user } = auth;
+	if (!user.id || location.pathname == '/login') {
 		return null;
 	}
 	return (
@@ -23,15 +23,18 @@ const Greet = ({
 }
 
 const SignInOutButton = ({ auth, signOut, location }) => {
-	const { isAuthorized } = auth
+	const { user } = auth
 	if (location.pathname == '/login') {
 		return null
 	}
 	return (
 		<span>
 			{
-				isAuthorized
-				? <a href="" onClick={signOut}>Sign Out</a>
+				user.id
+				? <a href="" onClick={(e) => {
+					e.preventDefault()
+					signOut()
+				}}>Sign Out</a>
 				: <Link to="/login">Sign In</Link>
 			}
 		</span>
