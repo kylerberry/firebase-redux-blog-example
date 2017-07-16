@@ -5,6 +5,11 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
 
+const cleanHeaderRoutes = {
+	'/sign_in' : true,
+	'/sign_up' : true
+}
+
 // @todo quick & dirty
 // remember presentational vs logic components
 const Greet = ({
@@ -12,7 +17,7 @@ const Greet = ({
 	location
 }) => {
 	const { user } = auth;
-	if (!user.id || location.pathname == '/login') {
+	if (!user.id) {
 		return null;
 	}
 	return (
@@ -24,9 +29,11 @@ const Greet = ({
 
 const SignInOutButton = ({ auth, signOut, location }) => {
 	const { user } = auth
-	if (location.pathname == '/login') {
+
+	if (cleanHeaderRoutes[location.pathname]) {
 		return null
 	}
+
 	return (
 		<span>
 			{
@@ -35,7 +42,7 @@ const SignInOutButton = ({ auth, signOut, location }) => {
 					e.preventDefault()
 					signOut()
 				}}>Sign Out</a>
-				: <Link to="/login">Sign In</Link>
+				: <Link to="/sign_in">Sign In</Link>
 			}
 		</span>
 	)

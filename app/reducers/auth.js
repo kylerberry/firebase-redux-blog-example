@@ -18,6 +18,7 @@ const user = (state = initialUserState, action) => {
 				id: action.payload.uid
 			}
 		case types.REMOVE_AUTHORIZED_USER:
+		case types.DELETE_USER_FULFILLED:
 		case types.SIGN_OUT_FULFILLED:
 			return initialUserState
 		default:
