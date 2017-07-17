@@ -4,22 +4,25 @@ import { Route, Redirect } from 'react-router-dom'
 import { withRouter } from 'react-router'
 
 let PrivateRoute = ({ component: Component, ...rest }) => {
+	const { auth : { user }} = rest
 	return (<Route {...rest} render={props => (
-		fakeAuth.isAuthenticated ? (
+		user.id ? (
 			<Component {...props}/>
 		) : (
 		<Redirect to={{
-			pathname: '/login',
+			pathname: rest.redirect ? rest.redirect : '/login',
 			state: { from: props.path }
 		}}/>
 	)
   )}/>)
 }
 
-/*const mapStateToProps = state => ({
-	...state
-})*/
+const mapStateToProps = ({ auth }) => ({
+	auth
+})
 
-PrivateRoute = withRouter(connect()(PrivateRoute))
+PrivateRoute = withRouter(connect(
+	mapStateToProps
+)(PrivateRoute))
 
 export default PrivateRoute

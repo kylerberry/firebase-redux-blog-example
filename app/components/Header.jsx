@@ -7,7 +7,8 @@ import { Link } from 'react-router-dom'
 
 const cleanHeaderRoutes = {
 	'/sign_in' : true,
-	'/sign_up' : true
+	'/sign_up' : true,
+	'/sign_out' : true
 }
 
 // @todo quick & dirty
@@ -21,13 +22,11 @@ const Greet = ({
 		return null;
 	}
 	return (
-		<span>
-			<span>Hello, { user.displayName } </span>
-		</span>
+		<span>Hello, { user.displayName }</span>
 	)
 }
 
-const SignInOutButton = ({ auth, signOut, location }) => {
+const SignInOutButton = ({ auth, location }) => {
 	const { user } = auth
 
 	if (cleanHeaderRoutes[location.pathname]) {
@@ -38,10 +37,7 @@ const SignInOutButton = ({ auth, signOut, location }) => {
 		<span>
 			{
 				user.id
-				? <a href="" onClick={(e) => {
-					e.preventDefault()
-					signOut()
-				}}>Sign Out</a>
+				? <a href="/sign_out">Sign Out</a>
 				: <Link to="/sign_in">Sign In</Link>
 			}
 		</span>
@@ -49,7 +45,7 @@ const SignInOutButton = ({ auth, signOut, location }) => {
 }
 
 class Header extends React.Component {
-	componentDidMount() {
+	componentWillMount() {
 		// @todo not sure if i really need this yet
 		// maybe refactor to just check token timestamp to invalidate localStorage user
 		const { fetchAuthRealtime } = this.props
@@ -57,7 +53,7 @@ class Header extends React.Component {
 	}
 
 	render() {
-		const { auth, location, signOut } = this.props
+		const { auth, location } = this.props
 		return (
 			<div>
 				<Link to="/"><h1>Firebase + Redux</h1></Link>

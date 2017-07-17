@@ -32,24 +32,15 @@ export const signIn = (email, password) => dispatch => {
 /**
 * Sign OUT an existing user
 */
-export const signOut = () => {
-	const promise = new Promise((resolve, reject) => {
-		try {
-			FirebaseAuth.signOut().then(resolve)
-		} catch (e) {
-			reject(e)
-		}
+export const signOut = () => ({
+	type: types.SIGN_OUT,
+	payload: new Promise(resolve => {
+		FirebaseAuth.signOut().then(resolve)
 	})
-
-	return {
-		type: types.SIGN_OUT,
-		payload: promise,
-		error: promise.error
-	}
-}
+})
 
 /**
-* Create an authorized user
+* Sign UP a NEW user
 * @todo refactor to use `await`
 *
 * @param {String} email

@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 
 class PostsList extends React.Component {
 
-	componentDidMount() {
+	componentWillMount() {
 		const { fetchPostsRealtime } = this.props
 		fetchPostsRealtime()
 	}

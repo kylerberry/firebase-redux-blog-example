@@ -17,7 +17,6 @@ const user = (state = initialUserState, action) => {
 				displayName: action.payload.displayName || action.payload.email.split('@')[0],
 				id: action.payload.uid
 			}
-		case types.REMOVE_AUTHORIZED_USER:
 		case types.DELETE_USER_FULFILLED:
 		case types.SIGN_OUT_FULFILLED:
 			return initialUserState
@@ -37,7 +36,23 @@ const error = (state = null, action) => {
 	}
 }
 
+const isPending = (state = false, action) => {
+	switch (action.type) {
+		case types.SIGN_IN_PENDING:
+		case types.SIGN_OUT_PENDING:
+			return true
+		case types.SIGN_IN_FULFILLED:
+		case types.SIGN_OUT_FULFILLED:
+		case types.SIGN_IN_REJECTED:
+		case types.SIGN_OUT_REJECTED:
+			return false
+		default:
+			return state
+	}
+}
+
 const auth = combineReducers({
+	isPending,
 	user,
 	error
 })
