@@ -2,7 +2,7 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { Route, BrowserRouter as Router } from 'react-router-dom'
 
-import App from './App'
+import AppContainer from './AppContainer'
 import SignIn from './sign_in'
 import SignOut from './SignOut' // this should go to a route, not an action
 import ViewPost from './ViewPost'
@@ -14,7 +14,7 @@ import PostsList from './PostsList'
 const Root = ({ store }) => 
 	<Provider store={store}>
 		<Router>
-			<App>
+			<AppContainer>
 				<Route exact path="/" component={PostsList} />
 				<Route path="/sign_in" component={SignIn} />
 				<Route path="/sign_up" component={SignIn} />
@@ -22,10 +22,8 @@ const Root = ({ store }) =>
 				<Route path="/sign_out" component={SignOut} />
 				<PrivateRoute path="/edit/:id" component={EditPost} />
 				<PrivateRoute path="/create" component={CreatePost} />
-			</App>
+			</AppContainer>
 		</Router>
 	</Provider>
-
-
 
 export default Root

@@ -45,13 +45,6 @@ const SignInOutButton = ({ auth, location }) => {
 }
 
 class Header extends React.Component {
-	componentWillMount() {
-		// @todo not sure if i really need this yet
-		// maybe refactor to just check token timestamp to invalidate localStorage user
-		const { fetchAuthRealtime } = this.props
-		// fetchAuthRealtime() 
-	}
-
 	render() {
 		const { auth, location } = this.props
 		return (
