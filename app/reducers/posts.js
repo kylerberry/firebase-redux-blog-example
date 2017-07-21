@@ -34,23 +34,10 @@ const byId = (state = {}, action) => {
 	}
 }
 
-const error = (state = null, action) => {
-	switch (action.type) {
-		case types.FETCH_POSTS_REJECTED:
-			return 'There was a problem fetching posts.'
-		case types.FETCH_POSTS_PENDING:
-		case types.FETCH_POSTS_FULFILLED:
-			return null
-		default:
-			return state
-	}
-}
-
 const posts = combineReducers({
 	list,
 	byId,
-	isFetching,
-	error
+	isFetching
 })
 
 export default posts

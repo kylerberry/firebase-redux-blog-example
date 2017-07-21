@@ -25,17 +25,6 @@ const user = (state = initialUserState, action) => {
 	}
 }
 
-const error = (state = null, action) => {
-	switch (action.type) {
-		case types.SIGN_IN_FULFILLED:
-			return null
-		case types.SIGN_IN_REJECTED:
-			return { ...action.error }
-		default:
-			return state
-	}
-}
-
 const isPending = (state = false, action) => {
 	switch (action.type) {
 		case types.SIGN_IN_PENDING:
@@ -53,7 +42,6 @@ const isPending = (state = false, action) => {
 
 const auth = combineReducers({
 	isPending,
-	user,
-	error
+	user
 })
 export default auth

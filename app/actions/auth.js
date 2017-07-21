@@ -14,19 +14,26 @@ export const signIn = (email, password) => dispatch => {
 		type: types.SIGN_IN_PENDING
 	})
 
-	FirebaseAuth.signInWithEmailAndPassword(email, password)
-		.then(user => {
-			dispatch({
-				type: types.SIGN_IN_FULFILLED,
-				payload: user
+	try {
+		FirebaseAuth.signInWithEmailAndPassword(email, password)
+			.then(user => {
+				dispatch({
+					type: types.SIGN_IN_FULFILLED,
+					payload: user
+				})
 			})
-		})
-		.catch(e => {
-			dispatch({
-				type: types.SIGN_IN_REJECTED,
-				error: e.message
+			.catch(e => {
+				dispatch({
+					type: types.SIGN_IN_REJECTED,
+					error: e.message
+				})
 			})
+	} catch (e) {
+		dispatch({
+			type: types.SIGN_IN_REJECTED,
+			error: e.message
 		})
+	}
 }
 
 /**

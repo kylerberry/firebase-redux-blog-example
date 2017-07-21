@@ -1,9 +1,12 @@
 import React from 'react'
 import * as authActions from '../actions/auth'
+import * as flashActions from '../actions/flash'
 
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
+
+import FlashMessage from './FlashMessage'
 
 const cleanHeaderRoutes = {
 	'/sign_in' : true,
@@ -26,7 +29,10 @@ const Greet = ({
 	)
 }
 
-const SignInOutButton = ({ auth, location }) => {
+const SignInOutButton = ({
+	auth,
+	location
+}) => {
 	const { user } = auth
 
 	if (cleanHeaderRoutes[location.pathname]) {
@@ -46,25 +52,38 @@ const SignInOutButton = ({ auth, location }) => {
 
 class Header extends React.Component {
 	render() {
-		const { auth, location } = this.props
+		const {
+			auth,
+			location,
+			flash,
+			dismissFlash
+		} = this.props
+
 		return (
 			<div>
 				<Link to="/"><h1>Firebase + Redux</h1></Link>
 				<Greet { ...this.props } />
 				<SignInOutButton { ...this.props } />
+				<FlashMessage onClickHandler={ dismissFlash }
+					{ ...flash }
+				/>
 			</div>
 		)
 	}
 }
 
-const mapStateToProps = (state, { location }) => ({
+const mapStateToProps = ({ auth, flash }, { location }) => ({
 	location,
-	auth: { ...state.auth }
+	flash,
+	auth
 })
 
 Header = withRouter(connect(
 	mapStateToProps,
-	{ ...authActions } 
+	{ 
+		...authActions,
+		...flashActions
+	} 
 )(Header))
 
 export default Header

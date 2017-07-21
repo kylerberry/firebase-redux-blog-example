@@ -10,7 +10,7 @@ const initialState = {
 
 const location = (state = initialState, action) => {
 	switch (action.type) {
-		case types.ROUTE_CHANGE_FULFILLED:
+		case types.ROUTE_CHANGE:
 			return {
 				...state,
 				...action.payload
