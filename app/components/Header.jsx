@@ -6,7 +6,9 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
 
-import FlashMessage from './FlashMessage'
+import { AppBar, IconMenu, IconButton, MenuItem, FlatButton } from 'material-ui'
+
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 const cleanHeaderRoutes = {
 	'/sign_in' : true,
@@ -16,7 +18,7 @@ const cleanHeaderRoutes = {
 
 // @todo quick & dirty
 // remember presentational vs logic components
-const Greet = ({
+/*const Greet = ({
 	auth,
 	location
 }) => {
@@ -48,32 +50,59 @@ const SignInOutButton = ({
 			}
 		</span>
 	)
-}
+}*/
+
+const LoggedMenu = ({ history }) => 
+	<IconMenu iconButtonElement={
+	      <IconButton><MoreVertIcon /></IconButton>
+	    }
+	    targetOrigin={{horizontal: 'right', vertical: 'top'}}
+		anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+	>
+		<MenuItem primaryText="Sign out" onTouchTap={e => {
+			e.preventDefault()
+			history.push('/sign_out')
+		}}	/>
+	</IconMenu>
+
+//Lets MUI know that this is a composed component
+LoggedMenu.muiName = 'IconMenu'
+
+const Login = ({ history }) => 
+	<FlatButton
+		onTouchTap={e => {
+			e.preventDefault()
+			history.push('/sign_in')
+		}} label="Login"
+	/>
+
+//Lets MUI know that this is a composed component
+Login.muiName = 'FlatButton'
 
 class Header extends React.Component {
+	static muiName = 'AppBar'
+
 	render() {
 		const {
 			auth,
-			location,
 			flash,
-			dismissFlash
+			dismissFlash,
+			history
 		} = this.props
 
+		const { user } = auth
+
 		return (
-			<div>
-				<Link to="/"><h1>Firebase + Redux</h1></Link>
-				<Greet { ...this.props } />
-				<SignInOutButton { ...this.props } />
-				<FlashMessage onClickHandler={ dismissFlash }
-					{ ...flash }
-				/>
-			</div>
+			<AppBar title={ <Link to="/">Firebase + Redux</Link> }
+				showMenuIconButton={false}
+				iconElementRight={user.id ? <LoggedMenu history={ history } /> : <Login history={ history } />}
+			/>
 		)
 	}
 }
 
-const mapStateToProps = ({ auth, flash }, { location }) => ({
-	location,
+const mapStateToProps = ({ auth, flash }, { history }) => ({
+	history,
 	flash,
 	auth
 })

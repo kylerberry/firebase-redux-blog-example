@@ -5,6 +5,8 @@ import configureStore from './configureStore'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import { saveState } from './localStorage'
 
+import 'normalize.css';
+
 // for material design
 injectTapEventPlugin();
 

@@ -9,18 +9,6 @@ import * as authActions from '../../actions/auth'
 import SignUpForm from './SignUpForm'
 import SignInForm from './SignInForm'
 
-/**
-* Better containing of these components:
-
-<SignIn> HOC
-	<Tabs>
-	{children} => [
-		<SignUpForm />
-		<SignInForm />
-	]
-</SignIn>
-*/
-
 class SignIn extends React.Component {
 	submitSignIn = values => {
 		const { signIn } = this.props
@@ -33,7 +21,6 @@ class SignIn extends React.Component {
 		signUp(values.email, values.password)
 	}
 
-	// @todo figure out how to make these tabs work with/without NavLink
 	render() {
 		const { formType, location, auth } = this.props
 		const { user } = auth
