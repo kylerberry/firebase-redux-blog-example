@@ -6,7 +6,14 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
 
-import { AppBar, IconMenu, IconButton, MenuItem, FlatButton } from 'material-ui'
+import {
+	AppBar,
+	IconMenu,
+	IconButton,
+	MenuItem,
+	FlatButton,
+	RaisedButton
+} from 'material-ui'
 
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
@@ -16,45 +23,20 @@ const cleanHeaderRoutes = {
 	'/sign_out' : true
 }
 
-// @todo quick & dirty
-// remember presentational vs logic components
-/*const Greet = ({
-	auth,
-	location
-}) => {
-	const { user } = auth;
-	if (!user.id) {
-		return null;
-	}
+const MainLink = (props) => {
 	return (
-		<span>Hello, { user.displayName }</span>
+		<Link to="/" style={{
+			color: '#fff',
+			textDecoration: 'none'
+		}}>Firebase + Redux</Link>
 	)
 }
 
-const SignInOutButton = ({
-	auth,
-	location
-}) => {
-	const { user } = auth
-
-	if (cleanHeaderRoutes[location.pathname]) {
-		return null
-	}
-
-	return (
-		<span>
-			{
-				user.id
-				? <a href="/sign_out">Sign Out</a>
-				: <Link to="/sign_in">Sign In</Link>
-			}
-		</span>
-	)
-}*/
-
 const LoggedMenu = ({ history }) => 
 	<IconMenu iconButtonElement={
-	      <IconButton><MoreVertIcon /></IconButton>
+	      <IconButton>
+	      	<MoreVertIcon />
+	      </IconButton>
 	    }
 	    targetOrigin={{horizontal: 'right', vertical: 'top'}}
 		anchorOrigin={{horizontal: 'right', vertical: 'top'}}
@@ -68,18 +50,35 @@ const LoggedMenu = ({ history }) =>
 //Lets MUI know that this is a composed component
 LoggedMenu.muiName = 'IconMenu'
 
-const Login = ({ history }) => 
-	<FlatButton
-		onTouchTap={e => {
-			e.preventDefault()
-			history.push('/sign_in')
-		}} label="Login"
-	/>
+const Login = ({ history }) => {
+	if (cleanHeaderRoutes[location.pathname]) {
+		return null
+	}
+
+	return (
+		<span>
+			<FlatButton
+				onTouchTap={e => {
+					e.preventDefault()
+					history.push('/sign_in')
+				}} label="Sign in"
+				style={{ color: '#fff' }}
+			/>
+			<RaisedButton onTouchTap={e => {
+					e.preventDefault()
+					history.push('/sign_up')
+				}} label="Sign up"
+			/>
+		</span>
+		
+	)
+}
 
 //Lets MUI know that this is a composed component
 Login.muiName = 'FlatButton'
 
 class Header extends React.Component {
+	//Lets MUI know that this is a composed component (statically)
 	static muiName = 'AppBar'
 
 	render() {
@@ -93,7 +92,7 @@ class Header extends React.Component {
 		const { user } = auth
 
 		return (
-			<AppBar title={ <Link to="/">Firebase + Redux</Link> }
+			<AppBar title={ <MainLink /> }
 				showMenuIconButton={false}
 				iconElementRight={user.id ? <LoggedMenu history={ history } /> : <Login history={ history } />}
 			/>

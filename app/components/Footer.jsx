@@ -1,6 +1,5 @@
 import React from 'react'
 
-const Footer = () => 
-	<div>Made by Kyler Berry</div>
+const Footer = () => null
 
 export default Footer

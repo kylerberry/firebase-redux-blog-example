@@ -1,3 +1,5 @@
+import each from 'lodash/each'
+
 export const loadState = () => {
 	try {
 		const serializedState = localStorage.getItem('state');

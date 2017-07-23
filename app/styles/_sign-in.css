@@ -1,0 +1,12 @@
+.auth-panel {
+	margin-top: 0;
+}
+
+/**
+* medium-up
+*/
+@media only screen and (min-width: 47.94rem) {
+	.auth-panel {
+		margin-top: 3em;
+	}
+}

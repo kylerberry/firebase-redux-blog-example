@@ -7,9 +7,9 @@ import * as flashActions from '../actions/flash'
 
 import { MuiThemeProvider } from 'material-ui'
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme'
+import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme'
 
-const muiTheme = getMuiTheme(darkBaseTheme);
+const muiTheme = getMuiTheme(lightBaseTheme);
 
 // Connect withRouter so that App.jsx can listen to route changes
 // Also wraps with Material-UI Theme Provider

@@ -9,6 +9,11 @@ import * as authActions from '../../actions/auth'
 import SignUpForm from './SignUpForm'
 import SignInForm from './SignInForm'
 
+import { Tabs, Tab, Paper } from 'material-ui'
+
+// need to convert these to sass
+import '../../../app/styles/_sign-in.css'
+
 class SignIn extends React.Component {
 	submitSignIn = values => {
 		const { signIn } = this.props
@@ -22,8 +27,7 @@ class SignIn extends React.Component {
 	}
 
 	render() {
-		const { formType, location, auth } = this.props
-		const { user } = auth
+		const { auth : { user } } = this.props
 
 		//if user is logged in, redirect home
 		if (user.id) {
@@ -31,21 +35,20 @@ class SignIn extends React.Component {
 		}
 
 		return (
-			<div>
-				<NavLink exact to="/sign_up" className="tab" activeClassName="tab--active">Sign Up</NavLink>
-				<NavLink exact to="/sign_in" className="tab" activeClassName="tab--active" >Sign In</NavLink>
-				{ formType == 'sign_up'
-					? <SignUpForm onSubmit={ this.submitSignUp } />
-					: <SignInForm onSubmit={ this.submitSignIn } />
-				}
+			<div className="auth-panel row center-xs center-sm">
+				<Tabs className="col-xs-12 col-sm-6 col-md-4">
+					<Tab label="Sign in" >
+						<SignInForm onSubmit={ this.submitSignIn } />
+					</Tab>
+					<Tab label="Sign up" >
+						<SignUpForm onSubmit={ this.submitSignUp } />
+					</Tab>
+				</Tabs>
 			</div>
 		)
 	}
 }
-
-//will need withRouter
-const mapStateToProps = ({ auth }, { location }) => ({
-	formType: location.pathname.replace('/', ''),
+const mapStateToProps = ({ auth }) => ({
 	auth
 })
 
