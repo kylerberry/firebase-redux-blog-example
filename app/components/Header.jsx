@@ -94,7 +94,13 @@ class Header extends React.Component {
 		return (
 			<AppBar title={ <MainLink /> }
 				showMenuIconButton={false}
-				iconElementRight={user.id ? <LoggedMenu history={ history } /> : <Login history={ history } />}
+				iconElementRight={user.id
+					? <LoggedMenu history={ history } /> 
+					: <Login history={ history } />
+				}
+				iconStyleRight={{
+					marginTop: '.8rem'
+				}}
 			/>
 		)
 	}

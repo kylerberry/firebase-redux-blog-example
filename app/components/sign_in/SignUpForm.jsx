@@ -9,6 +9,10 @@ import {
 } from './helpers'
 
 class SignUpForm extends React.Component {
+	componentWillUnmount() {
+		this.props.reset('signin')
+	}
+	
 	render () {
 		const { pristine, submitting, handleSubmit } = this.props
 		return (

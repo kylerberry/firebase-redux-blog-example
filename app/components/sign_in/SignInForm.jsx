@@ -9,6 +9,9 @@ import { renderTextField, required, email } from './helpers'
 */
 
 class SignInForm extends React.Component {
+	componentWillUnmount() {
+		this.props.reset('signin')
+	}
 
 	render () {
 		const { pristine, submitting, handleSubmit, required } = this.props

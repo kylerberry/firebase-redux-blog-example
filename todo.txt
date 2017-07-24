@@ -29,12 +29,11 @@
 	},
 	user_comments : {
 		$userId : $commentId
+	},
+	posts_comments : {
+		$post : $comment
 	}
 }
 
 - update db permissions
-- redirect home on successful login or register ( or referer )
-- if user already logged in and lands on /login, redirect to referer
-- form validations/ error messaging to signIn/Up UI
-- add some styles
-- refactor the header
+- use dialogs and snackbar for errors and messages to the user

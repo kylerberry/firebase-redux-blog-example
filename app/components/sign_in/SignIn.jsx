@@ -27,20 +27,30 @@ class SignIn extends React.Component {
 	}
 
 	render() {
-		const { auth : { user } } = this.props
+		const { auth : { user }, router } = this.props
+		const { history } = router
 
 		//if user is logged in, redirect home
 		if (user.id) {
 			return <Redirect exact to="/" />
 		}
 
+		let tabIndex = location.pathname == '/sign_in' ? 0 : 1
+
 		return (
 			<div className="auth-panel row center-xs center-sm">
-				<Tabs className="col-xs-12 col-sm-6 col-md-4">
-					<Tab label="Sign in" >
+				<Tabs className="col-xs-12 col-sm-6 col-md-4"
+					initialSelectedIndex={tabIndex}>
+					<Tab label="Sign in"
+						onActive={() => {
+							history.replace('/sign_in')
+						}}>
 						<SignInForm onSubmit={ this.submitSignIn } />
 					</Tab>
-					<Tab label="Sign up" >
+					<Tab label="Sign up"
+						onActive={() => {
+							history.replace('/sign_up')
+						}}>
 						<SignUpForm onSubmit={ this.submitSignUp } />
 					</Tab>
 				</Tabs>
@@ -48,8 +58,9 @@ class SignIn extends React.Component {
 		)
 	}
 }
-const mapStateToProps = ({ auth }) => ({
-	auth
+const mapStateToProps = ({ auth }, router) => ({
+	auth,
+	router
 })
 
 SignIn = withRouter(connect(
