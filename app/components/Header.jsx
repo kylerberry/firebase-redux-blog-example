@@ -34,7 +34,7 @@ const MainLink = (props) => {
 
 const LoggedMenu = ({ history }) => 
 	<IconMenu iconButtonElement={
-	      <IconButton>
+	      <IconButton iconStyle={{color: '#fff'}}>
 	      	<MoreVertIcon />
 	      </IconButton>
 	    }
@@ -99,7 +99,7 @@ class Header extends React.Component {
 					: <Login history={ history } />
 				}
 				iconStyleRight={{
-					marginTop: '.8rem'
+					marginTop: user.id ? '.5rem' : '.8rem'
 				}}
 			/>
 		)

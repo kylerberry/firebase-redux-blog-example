@@ -5,9 +5,9 @@ import { NavigationClose } from 'material-ui/svg-icons'
 import IconButton from 'material-ui/IconButton';
 
 const messageTypes = {
-	'info' : 'info',
-	'error' : 'error',
-	'success' : 'success'
+	'info' : { label: 'info', color: styles.cyan700 },
+	'error' : { label: 'error', color: styles.orange700 },
+	'success' : { label: 'success', color: styles.lightGreen500 }
 }
 
 const FlashMessage = ({ message, type, onClickHandler }) => {
@@ -15,24 +15,29 @@ const FlashMessage = ({ message, type, onClickHandler }) => {
 		return null
 	}
 
-	const typeClass = messageTypes[type] ? messageTypes[type] : ''
+	const typeClass = messageTypes[type] ? messageTypes[type].label : ''
 	return (
 		<Paper rounded={false}
 			style={{
-				backgroundColor: styles.deepOrange500,
+				backgroundColor: messageTypes[type].color,
 				overflow: 'hidden',
-				paddingLeft: '1.5em'
+				paddingLeft: '1.5em',
+				color: '#fff',
+				position: 'relative'
 			}}
 			>
 			<p style={{
-				float: 'left'
+				textAlign: 'center'
 			}}>{ message }</p>
 			<IconButton onTouchTap={e => {
 					e.preventDefault()
 					onClickHandler()
 				}}
+				iconStyle={{color: styles.white}}
 				style={{
-					float: 'right'
+					position: 'absolute',
+					top: '0',
+					right: '0'
 				}}>
 				<NavigationClose />
 			</IconButton>
