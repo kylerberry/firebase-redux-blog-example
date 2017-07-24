@@ -37,3 +37,4 @@
 
 - update db permissions
 - use dialogs and snackbar for errors and messages to the user
+- need a 400 error page

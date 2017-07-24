@@ -1,22 +1,18 @@
 import React from 'react'
-import * as postActions from '../actions/post'
+import * as postActions from '../../actions/post'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import CreateForm from './CreateForm'
+
+// @todo need to Authenticate AND Authorize
+// this will be the job of jwt
 
 class CreatePost extends React.Component {
 
 	render () {
 		const { createPost, auth } = this.props
+		return <CreateForm handleSubmit={createPost} />
 
-		return <button onClick={() => {
-			const now = new Date()
-			createPost({
-				content: 'test content',
-				datetime: now.toISOString(),
-				title: `title: ${now.toISOString()}`,
-				uid: auth.user.id
-			})
-		}}>Create Post</button>
 	}
 }
 
@@ -26,7 +22,7 @@ const mapStateToProps = state => ({
 
 CreatePost = connect(
 	mapStateToProps,
-	postActions
+	{ ...postActions }
 )(CreatePost)
 
 export default CreatePost

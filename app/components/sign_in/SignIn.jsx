@@ -58,6 +58,7 @@ class SignIn extends React.Component {
 		)
 	}
 }
+
 const mapStateToProps = ({ auth }, router) => ({
 	auth,
 	router
