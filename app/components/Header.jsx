@@ -32,6 +32,11 @@ const MainLink = (props) => {
 	)
 }
 
+const MenuItemLink = ({ to, text }) => 
+	<Link to={to} >
+		<MenuItem primaryText={text}/>
+	</Link>
+
 const LoggedMenu = ({ history }) => 
 	<IconMenu iconButtonElement={
 	      <IconButton iconStyle={{color: '#fff'}}>
@@ -41,10 +46,8 @@ const LoggedMenu = ({ history }) =>
 	    targetOrigin={{horizontal: 'right', vertical: 'top'}}
 		anchorOrigin={{horizontal: 'right', vertical: 'top'}}
 	>
-		<MenuItem primaryText="Sign out" onTouchTap={e => {
-			e.preventDefault()
-			history.push('/sign_out')
-		}}	/>
+		<MenuItemLink to="/sign_out" text="Sign Out" />
+		<MenuItemLink to="/create" text="Create" />
 	</IconMenu>
 
 //Lets MUI know that this is a composed component

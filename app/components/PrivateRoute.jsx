@@ -1,26 +1,28 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Route, Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router'
 
 let PrivateRoute = ({ component: Component, dispatch, auth, ...rest }) => {
 	const { user } = auth
-	if (!user.id) {
-		return (<Redirect path={{
-			pathname: '/sign_in'
-		}} />)
-	}
-	return (<Route { ...rest } component={Component} />)
+	
+	return (<Route render={props => {
+			return ( !user.id
+				? <Redirect to="/sign_in" />
+				: <Component { ...props } />
+			)
+	}} />)
 }
 
 const mapStateToProps = ({ auth }) => ({
 	auth
 })
 
-PrivateRoute = connect(
+PrivateRoute = withRouter(connect(
 	mapStateToProps,
 	null,
 	null,
 	{ pure : false } //workaround for `connect`ing Route to store
-)(PrivateRoute)
+)(PrivateRoute))
 
 export default PrivateRoute

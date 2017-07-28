@@ -1,6 +1,6 @@
 import React from 'react'
 import { Provider } from 'react-redux'
-import { Route, BrowserRouter as Router } from 'react-router-dom'
+import { Route, Switch, BrowserRouter as Router } from 'react-router-dom'
 
 import AppContainer from './AppContainer'
 import SignIn from './sign_in'
@@ -16,12 +16,14 @@ const Root = ({ store }) =>
 	<Provider store={store}>
 		<Router>
 			<AppContainer>
-				<Route exact path="/" component={PostsList} />
-				<Route exact path="/sign_in" component={SignIn} />
-				<Route exact path="/sign_up" component={SignIn} />
-				<Route exact path="/sign_out" component={SignOut} />
-				
-				<PrivateRoute exact path="/create" component={CreatePost} />
+				<Switch>
+					<Route exact path="/" component={PostsList} />
+					<Route path="/sign_in" component={SignIn} />
+					<Route path="/sign_up" component={SignIn} />
+					<Route path="/sign_out" component={SignOut} />
+
+					<PrivateRoute exact path="/create" component={CreatePost} />
+				</Switch>
 			</AppContainer>
 		</Router>
 	</Provider>
