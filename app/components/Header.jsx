@@ -37,18 +37,29 @@ const MenuItemLink = ({ to, text }) =>
 		<MenuItem primaryText={text}/>
 	</Link>
 
-const LoggedMenu = ({ history }) => 
-	<IconMenu iconButtonElement={
-	      <IconButton iconStyle={{ color: '#fff' }}>
-	      	<MoreVertIcon />
-	      </IconButton>
-	    }
-	    targetOrigin={{horizontal: 'right', vertical: 'top'}}
-		anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-	>
-		<MenuItemLink to="/create" text="Create" />
-		<MenuItemLink to="/sign_out" text="Sign Out" />
-	</IconMenu>
+const Greet = ({ user }) => 
+	<div style={{
+		color: '#fff',
+		float: 'left',
+		paddingTop: '1em'
+	}}>Hi, { user.displayName }</div>
+
+const LoggedMenu = ({ history, user }) => 
+	<div>
+		<Greet user={user} />
+		<IconMenu iconButtonElement={
+		      <IconButton iconStyle={{ color: '#fff' }}>
+		      	<MoreVertIcon />
+		      </IconButton>
+		    }
+		    targetOrigin={{horizontal: 'right', vertical: 'top'}}
+			anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+		>
+			<MenuItemLink to="/create" text="Create" />
+			<MenuItemLink to="/sign_out" text="Sign Out" />
+		</IconMenu>
+	</div>
+	
 
 //Lets MUI know that this is a composed component
 LoggedMenu.muiName = 'IconMenu'
@@ -98,13 +109,14 @@ class Header extends React.Component {
 			<AppBar title={ <MainLink /> }
 				showMenuIconButton={false}
 				iconElementRight={user.id
-					? <LoggedMenu history={ history } /> 
+					? <LoggedMenu history={ history } user={user} />
 					: <Login history={ history } />
 				}
 				iconStyleRight={{
 					marginTop: user.id ? '.5rem' : '.8rem'
 				}}
-			/>
+			>
+			</AppBar>
 		)
 	}
 }
