@@ -12,57 +12,18 @@ import ViewPost from './ViewPost'
 import EditPost from './EditPost'
 import PrivateRoute from './PrivateRoute'
 import PostsList from './PostsList'
-import { MuiThemeProvider, FlatButton, Dialog } from 'material-ui'
+import UnsavedChangesDialog from './UnsavedChangesDialog'
 
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme'
-const muiTheme = getMuiTheme(lightBaseTheme)
-
-class UnsavedChangesDialog extends React.Component {
-
-	render() {
-		const {
-			message,
-			callback,
-			unmountDialogHandler
-		} = this.props
-
-		const actions = [
-			<FlatButton
-		        label="Cancel"
-		        onTouchTap={() => {
-		        	unmountDialogHandler()
-		        	callback(false)
-		        }}
-	      	/>,
-	      	<FlatButton
-		        label="Leave"
-		        primary={true}
-		        onTouchTap={() => {
-		        	unmountDialogHandler()
-		        	callback(true)
-		        }}
-	      	/>
-		]
-
-		return (
-			<Dialog modal={false} 
-				actions={actions}
-				open={true}
-			>
-				{ message }
-			</Dialog>
-		)
-	}
-}
+// theme our dialog outside of the AppContainer
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 // themes a component that gets rendered outside the main app
+// @todo make this a reusable HOC
 class ThemedDialog extends React.Component {
-
 	render() {
 		const { message, callback, unmountDialogHandler } = this.props
 		return (
-			<MuiThemeProvider muiTheme={muiTheme}>
+			<MuiThemeProvider>
 				<UnsavedChangesDialog message={message}
 					unmountDialogHandler={unmountDialogHandler}
 					callback={callback}
@@ -76,11 +37,8 @@ class ThemedDialog extends React.Component {
 const Root = ({ store }) => 
 	<Provider store={store}>
 		<Router getUserConfirmation={(message, callback) => {
+			// reliably remove the dialog and reset it's internal state
 			const unmountDialog = () => {
-				// @todo figure out why im getting following error:
-				/**
-				* Cannot read property 'getChildContext' of null
-				*/
 				ReactDOM.unmountComponentAtNode(document.getElementById('messages'))
 			}
 
