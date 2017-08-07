@@ -6,12 +6,10 @@ import { withRouter } from 'react-router'
 let PrivateRoute = ({ component: Component, dispatch, auth, ...rest }) => {
 	const { user } = auth
 	
-	return (<Route render={props => {
-			return ( !user.id
-				? <Redirect to="/sign_in" />
-				: <Component { ...props } />
-			)
-	}} />)
+	return (<Route render={props => (!user.id
+		? <Redirect to="/sign_in" />
+		: <Component { ...props } />
+	)}/>)
 }
 
 const mapStateToProps = ({ auth }) => ({

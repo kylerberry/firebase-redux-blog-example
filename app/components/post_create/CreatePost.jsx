@@ -2,16 +2,27 @@ import React from 'react'
 import * as postActions from '../../actions/post'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 import CreateForm from './CreateForm'
 
 // @todo need to Authenticate AND Authorize
-// this will be the job of jwt
 
 class CreatePost extends React.Component {
 
 	render () {
-		const { createPost, auth } = this.props
-		return <CreateForm handleSubmit={createPost} />
+		const { createPost, auth, history, location } = this.props
+		return (
+			<div className="row center-xs">
+				<div className="col-xs-12 col-sm-6 col-md-4">
+					<div style={{ padding: '1em'}}>
+						<CreateForm handleSubmit={createPost} 
+							history={history} 
+							location={location}
+						/>
+					</div>
+				</div>
+			</div>
+		)
 
 	}
 }
@@ -20,9 +31,9 @@ const mapStateToProps = state => ({
 	auth : { ...state.auth }
 })
 
-CreatePost = connect(
+CreatePost = withRouter(connect(
 	mapStateToProps,
 	{ ...postActions }
-)(CreatePost)
+)(CreatePost))
 
 export default CreatePost

@@ -38,7 +38,7 @@ class SignIn extends React.Component {
 		let tabIndex = location.pathname == '/sign_in' ? 0 : 1
 
 		return (
-			<div className="auth-panel row center-xs center-sm">
+			<div className="auth-panel row center-xs">
 				<Tabs className="col-xs-12 col-sm-6 col-md-4"
 					initialSelectedIndex={tabIndex}>
 					<Tab label="Sign in"

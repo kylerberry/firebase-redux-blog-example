@@ -31,7 +31,6 @@ class SignUpForm extends React.Component {
 						<Field type="text"
 							component={renderTextField}
 							name="email_verify"
-							placeholder="Re-type email"
 							label="Re-type email"
 							validate={[matchField('email')]}
 						/>
@@ -40,7 +39,6 @@ class SignUpForm extends React.Component {
 						<Field type="password"
 							component={renderTextField}
 							name="password"
-							placeholder="password"
 							label="password"
 							validate={[required]}
 						/>
@@ -49,7 +47,6 @@ class SignUpForm extends React.Component {
 						<Field type="password"
 							component={renderTextField}
 							name="password_verify"
-							placeholder="Re-type password"
 							label="Re-type password"
 							validate={[required, matchField('password')]}
 						/>

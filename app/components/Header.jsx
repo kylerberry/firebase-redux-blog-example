@@ -33,21 +33,21 @@ const MainLink = (props) => {
 }
 
 const MenuItemLink = ({ to, text }) => 
-	<Link to={to} >
+	<Link to={to} style={{ textDecoration: 'none' }}>
 		<MenuItem primaryText={text}/>
 	</Link>
 
 const LoggedMenu = ({ history }) => 
 	<IconMenu iconButtonElement={
-	      <IconButton iconStyle={{color: '#fff'}}>
+	      <IconButton iconStyle={{ color: '#fff' }}>
 	      	<MoreVertIcon />
 	      </IconButton>
 	    }
 	    targetOrigin={{horizontal: 'right', vertical: 'top'}}
 		anchorOrigin={{horizontal: 'right', vertical: 'top'}}
 	>
-		<MenuItemLink to="/sign_out" text="Sign Out" />
 		<MenuItemLink to="/create" text="Create" />
+		<MenuItemLink to="/sign_out" text="Sign Out" />
 	</IconMenu>
 
 //Lets MUI know that this is a composed component

@@ -1,5 +1,5 @@
 import React from 'react'
-import { TextField } from 'material-ui'
+import { TextField, Checkbox } from 'material-ui'
 
 // returns a material UI <TextField> for the redux-form <Field> component prop
 export const renderTextField = ({ meta: { touched, error }, input, ...rest }) => {
@@ -10,11 +10,21 @@ export const renderTextField = ({ meta: { touched, error }, input, ...rest }) =>
 		    floatingLabelStyle={{ opacity: 0, bottom: '10px' }}
 		  	errorText={touched && error}
 		    underlineShow={true}
-		    hintText=""
 		    { ...rest }
 		    { ...input }
 		/>
 )}
+
+export const renderCheckbox = ({ meta: { error }, input, ...rest }) => {
+	const inputClone = Object.assign({}, input)
+	delete inputClone.checked
+	return (
+		<Checkbox defaultChecked={input.checked} 
+			{ ...rest }
+			{ ...inputClone }
+		/>
+	)
+}
 
 /**
 * required field validation
